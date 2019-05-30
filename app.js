@@ -1,5 +1,6 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
+const cors = require("cors");
 
 const models = require("./models"); // data
 const typeDefs = require("./typeDefs");
@@ -17,6 +18,7 @@ const server = new ApolloServer({
 });
 
 const app = express();
+app.use(cors());
 // now we can go to `http://localhost:3000/graphql` graphql playground
 server.applyMiddleware({ app });
 
