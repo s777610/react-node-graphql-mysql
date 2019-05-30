@@ -3,7 +3,7 @@ const keys = require("../config/key");
 
 const sequelize = new Sequelize("graphql", "root", keys.sqlPassword, {
   dialect: "mysql",
-  operatorsAliases: false,
+  //operatorsAliases: false,
   define: {
     timestamps: false
   }

@@ -5,14 +5,14 @@ const models = require("./models"); // data
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolvers");
 
-const me = models.users[0];
+//const me = models.users[0];
 
 const server = new ApolloServer({
   typeDefs, // schema
   resolvers,
   context: {
-    models,
-    me
+    models
+    //me
   }
 });
 
