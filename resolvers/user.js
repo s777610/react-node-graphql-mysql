@@ -1,9 +1,4 @@
-const jwt = require("jsonwebtoken");
-
-const createToken = (user, secret, expiresIn) => {
-  const { id, name, username } = user;
-  return jwt.sign({ id, name, username }, secret, { expiresIn });
-};
+const auth = require("../util/auth");
 
 const resolvers = {
   Query: {
@@ -57,7 +52,7 @@ const resolvers = {
       }
 
       return {
-        token: createToken(user, secret, "1m")
+        token: auth.createToken(user, secret, "30m")
       };
     }
   },

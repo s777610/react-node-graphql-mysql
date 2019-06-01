@@ -4,12 +4,16 @@ const resolvers = {
     cars: (parent, args, { models }) => models.Car.findAll()
   },
   Mutation: {
-    createCar: (parent, { make, model, color }, { models }) => {
+    createCar: (parent, { make, model, color }, { models, me }) => {
+      if (!me) throw new Error("Not Authenticated");
+
       const car = {
         make,
         model,
-        color
+        color,
+        userId: me.id
       };
+
       return models.Car.create(car);
     },
     removeCar: (parent, { id }, { models }) => {
