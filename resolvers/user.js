@@ -19,6 +19,23 @@ const resolvers = {
           id
         }
       });
+    },
+    register: async (parent, { name, username, password }, { models }) => {
+      const user = {
+        name,
+        username,
+        password
+      };
+
+      const registeredUser = await models.User.create(user);
+      try {
+        if (typeof registeredUser.id === "number") {
+          return true;
+        } else return false;
+      } catch (err) {
+        console.error(err);
+        return false;
+      }
     }
   },
 

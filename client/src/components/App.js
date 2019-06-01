@@ -12,7 +12,7 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       <h1>GraphQL App</h1>
-
+      <hr />
       <AddUser />
       <hr />
       <Users />
