@@ -5,6 +5,8 @@ const createData = async () => {
   await models.User.create(
     {
       name: "Tamas",
+      username: "tamas",
+      password: "test1",
       cars: [
         {
           make: "Mercedes",
@@ -21,6 +23,8 @@ const createData = async () => {
   await models.User.create(
     {
       name: "Steven",
+      username: "steven",
+      password: "test2",
       cars: [
         {
           make: "Fiat",
