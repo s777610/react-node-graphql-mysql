@@ -1,6 +1,7 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const cors = require("cors");
+const keys = require("./config/key");
 
 const models = require("./models"); // data
 const typeDefs = require("./typeDefs");
@@ -12,7 +13,8 @@ const server = new ApolloServer({
   typeDefs, // schema
   resolvers,
   context: {
-    models
+    models,
+    secret: keys.jwtSecret
     //me
   }
 });
