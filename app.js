@@ -2,25 +2,11 @@ const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const cors = require("cors");
 const keys = require("./config/key");
-const jwt = require("jsonwebtoken");
+const auth = require("./util/auth");
 
 const models = require("./models"); // data
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolvers");
-
-//const me = models.users[0];
-
-const getLoggedInUser = req => {
-  const token = req.headers["x-auth-token"];
-  if (token) {
-    try {
-      // return user obj
-      return jwt.verify(token, keys.jwtSecret);
-    } catch (err) {
-      throw new Error("Session expired");
-    }
-  }
-};
 
 const server = new ApolloServer({
   typeDefs, // schema
@@ -28,7 +14,7 @@ const server = new ApolloServer({
   context: ({ req }) => ({
     models,
     secret: keys.jwtSecret,
-    me: getLoggedInUser(req)
+    me: auth.getLoggedInUser(req)
   })
 });
 

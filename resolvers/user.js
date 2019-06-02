@@ -52,7 +52,7 @@ const resolvers = {
       }
 
       return {
-        token: auth.createToken(user, secret, "30m")
+        token: auth.createToken(user, secret)
       };
     }
   },
