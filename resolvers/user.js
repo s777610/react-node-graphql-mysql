@@ -2,6 +2,7 @@ const auth = require("../util/auth");
 const cloudinary = require("cloudinary");
 const keys = require("../config/key");
 const path = require("path");
+const { GraphQLScalarType } = require("graphql");
 
 cloudinary.config({
   cloud_name: keys.cloudName,
@@ -95,8 +96,36 @@ const resolvers = {
           userId: parent.id
         }
       });
+    },
+    photo: (parent, { options }) => {
+      let url = cloudinary.url(parent.photo);
+      if (options) {
+        const [width, q_auto, f_auto, face] = options;
+        const cloudinaryOptions = {
+          ...(q_auto === "true" && { quality: "auto" }),
+          ...(f_auto === "true" && { fetch_format: "auto" }),
+          ...(face && { crop: "thumb", gravity: "face" }),
+          width,
+          secure: true
+        };
+        url = cloudinary.url(parent.photo, cloudinaryOptions);
+        return url;
+      }
+      return url;
     }
-  }
+  },
+  CloudinaryOptions: new GraphQLScalarType({
+    name: "CloudinaryOptions",
+    parseValue(value) {
+      return value;
+    },
+    serialize(value) {
+      return value;
+    },
+    parseLiteral(ast) {
+      return ast.value.split(",");
+    }
+  })
 };
 
 module.exports = resolvers;
