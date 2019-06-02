@@ -73,10 +73,15 @@ const resolvers = {
       filename = `${mainDir}/uploads/${filename}`;
       try {
         const photo = await cloudinary.v2.uploader.upload(filename);
-        // await models.User.update({
-
-        // })
-        console.log(photo);
+        await models.User.update(
+          {
+            photo: `${photo.public_id}.${photo.format}`
+          },
+          {
+            where: { username: me.username }
+          }
+        );
+        return `${photo.public_id}.${photo.format}`;
       } catch (err) {
         throw new Error(err);
       }
