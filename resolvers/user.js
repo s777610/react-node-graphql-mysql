@@ -1,6 +1,13 @@
 const auth = require("../util/auth");
 const cloudinary = require("cloudinary");
 const keys = require("../config/key");
+const path = require("path");
+
+cloudinary.config({
+  cloud_name: keys.cloudName,
+  api_key: keys.apiKey,
+  api_secret: keys.apiSecret
+});
 
 const resolvers = {
   Query: {
@@ -56,6 +63,23 @@ const resolvers = {
       return {
         token: auth.createToken(user, secret)
       };
+    },
+    uploadImage: async (parent, { filename }, { models, me }) => {
+      if (!me) {
+        throw new Error("Not Authenticated!");
+      }
+
+      const mainDir = path.dirname(require.main.filename);
+      filename = `${mainDir}/uploads/${filename}`;
+      try {
+        const photo = await cloudinary.v2.uploader.upload(filename);
+        // await models.User.update({
+
+        // })
+        console.log(photo);
+      } catch (err) {
+        throw new Error(err);
+      }
     }
   },
 
