@@ -1,4 +1,6 @@
 const auth = require("../util/auth");
+const cloudinary = require("cloudinary");
+const keys = require("../config/key");
 
 const resolvers = {
   Query: {
