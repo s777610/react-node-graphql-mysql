@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.5.0",
-    "apollo-server-express": "^2.5.0",
+    "apollo-server-express": "^2.14.2",
     "bcrypt": "^3.0.6",
     "cloudinary": "^1.14.0",
     "concurrently": "^4.1.0",
